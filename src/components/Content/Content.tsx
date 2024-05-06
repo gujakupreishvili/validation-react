@@ -17,10 +17,18 @@ export default function Content() {
     validationSchema: validation,
   });
   const notify = () => {
-    if (Object.keys(errors).length == 0) {
+    const errors = formik.errors as { [key: string]: string };
+    const values = formik.values as { [key: string]: string };
+
+    if (
+      Object.keys(errors).length === 0 &&
+      Object.keys(values).some((key) => values[key] !== "")
+    ) {
       toast.success("Congratulation!");
+      console.log("congrat");
     } else {
-      toast.error("error");
+      toast.error("Error");
+      console.log("error");
     }
   };
 
