@@ -1,5 +1,7 @@
 import { useFormik } from "formik";
 import { validation } from "../../utils/validationschemas";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const initialValues = {
   firstname: "",
   lastname: "",
@@ -14,11 +16,19 @@ export default function Content() {
     },
     validationSchema: validation,
   });
+  const notify = () => {
+    if (Object.keys(errors).length == 0) {
+      toast.success("Congratulation!");
+    } else {
+      toast.error("error");
+    }
+  };
 
   const { handleBlur, handleChange, handleSubmit, values, errors } = formik;
+
   return (
     <div className=" flex flex-col items-center justify-center gap-10 lg:flex-row">
-      <div className=" flex flex-col items-center  gap-1 lg:gap-6">
+      <div className=" flex flex-col items-center  gap-1 lg:gap-6 mt-[30px]">
         <p
           className="text-[28px] text-white font-[700] leading-9 w-[327px] text-center
          lg:text-start lg:w-[525px] lg:text-[55px] lg:leading-[55px]"
@@ -44,7 +54,7 @@ export default function Content() {
         </button>
         <form
           action=""
-          className=" flex flex-col items-center gap-6 w-[327px] bg-white p-7 rounded-md shadow-lg lg:w-[540px]"
+          className=" flex flex-col items-center gap-6 w-[327px] bg-white p-7 rounded-md shadow-lg lg:w-[540px] mb-[20px]"
           onSubmit={handleSubmit}
         >
           <input
@@ -113,6 +123,7 @@ export default function Content() {
           <button
             className="w-[279px] bg-[#38CC8B] h-[56px] rounded-lg lg:w-[460px]"
             type="submit"
+            onClick={notify}
           >
             <p className="text-white text-base">CLAIM YOUR FREE TRIAL</p>
           </button>
@@ -122,6 +133,7 @@ export default function Content() {
           </p>
         </form>
       </div>
+      <ToastContainer position="top-left" autoClose={1500} />
     </div>
   );
 }
